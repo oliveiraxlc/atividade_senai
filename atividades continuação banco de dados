@@ -1,0 +1,119 @@
+ATIVIDADE 1
+
+select * from usuario
+where nome like '%a%';
+
+busca todos os usuários cujo nome contenha a letra "a".
+RESULTADO:
+retorna usuários com nomes que tenham a letra "a" em qualquer posição, ex: lucas, diana, gabriel
+
+ATIVIDADE 2
+(print)
+
+ATIVIDADE 3
+create index idx_usuario_nome on usuario(nome);
+RESULTADO:
+criação de índice para melhorar desempenho nas consultas que filtram pela coluna nome.
+
+ATIVIDADE 4 
+(print)
+execução da consulta foi mais rapida 
+
+(a partir de agora vou colocar os comandos em letra maiuscula pra ficar mais facil de identificar)
+ATIVIDADE 5
+ALTER TABLE usuario ALTER COLUMN email TYPE int;
+RESULTADO: ERRO USING email::integer
+segunda tentativa: ALTER TABLE usuario ALTER COLUMN email TYPE int USING email::integer;
+segundo resultado:Erro SQL [22P02]: ERRO: sintaxe de entrada é inválida para tipo integer: "lucas@email.com"
+
+ATIVIDADE 6
+ALTER TABLE usuario ALTER COLUMN id_endereco TYPE varchar(10);
+RESULTADO: Erro SQL [42804]: ERRO: restrição de chave estrangeira "usuario_id_endereco_fkey" não pode ser implementada
+  Detalhe: Colunas chave "id_endereco" e "id_endereco" são de tipos incompatíveis: character varying e integer.
+
+ATIVIDADE 7
+CREATE USER lucasmuller WITH PASSWORD 'senha123';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO lucasmuller;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO lucasmuller;
+
+RESULTADO: usuário criado com acesso total para manipular todas as tabelas
+
+ATIVIDADE 8
+CREATE USER colega WITH PASSWORD 'senha456';
+GRANT SELECT ON TABLE usuario TO colega;  
+RESULTADO: criação de usuário para colega com permissão somente SELECT em uma tabela
+
+ATIVIDADE 9
+SELECT * FROM usuario;
+RESULTADO: sucesso, dados retornados
+
+INSERT INTO usuario(...) VALUES(...);
+RESULTADO: Erro, permissão negada
+
+UPDATE usuario SET nome='Teste';
+RESULTADO: erro permissão negada
+
+DELETE FROM usuario WHERE id_usuario=1;
+RESULTADO: erro, permissão negada
+
+
+ATIVIDADE 10
+
+Grupo 1 Pedidos e Usuários
+
+INNER JOIN
+SELECT * FROM pedidos p INNER JOIN usuario u ON p.id_usuario = u.id_usuario;
+
+
+LEFT JOIN
+SELECT * FROM pedidos p LEFT JOIN usuario u ON p.id_usuario = u.id_usuario;
+
+
+RIGHT JOIN
+SELECT * FROM pedidos p RIGHT JOIN usuario u ON p.id_usuario = u.id_usuario;
+
+Grupo 2 Produtos e Fornecedores
+
+INNER JOIN
+SELECT * FROM produto p INNER JOIN fornecedores f ON p.id_fornecedor = f.id_fornecedor;
+
+
+LEFT JOIN
+SELECT * FROM produto p LEFT JOIN fornecedores f ON p.id_fornecedor = f.id_fornecedor;
+
+
+RIGHT JOIN
+SELECT * FROM produto p RIGHT JOIN fornecedores f ON p.id_fornecedor = f.id_fornecedor;
+
+Grupo 3 Pagamento e Boleto
+
+INNER JOIN
+SELECT * FROM pagamento p INNER JOIN boleto b ON p.id_pagamento = b.id_pagamento;
+
+
+LEFT JOIN
+SELECT * FROM pagamento p LEFT JOIN boleto b ON p.id_pagamento = b.id_pagamento;
+
+
+RIGHT JOIN
+SELECT * FROM pagamento p RIGHT JOIN boleto b ON p.id_pagamento = b.id_pagamento;
+
+Grupo 4 Pedidos e Produtos
+
+INNER JOIN
+SELECT * FROM pedidos p INNER JOIN produto prod ON p.id_produto = prod.id_produto;
+
+
+LEFT JOIN
+SELECT * FROM pedidos p LEFT JOIN produto prod ON p.id_produto = prod.id_produto;
+
+RIGHT JOIN
+SELECT * FROM pedidos p RIGHT JOIN produto prod ON p.id_produto = prod.id_produto;
+
+
+ATIVIDADE 11
+UPDATE endereco SET complemento = NULL WHERE complemento IS NOT NULL;
+RESULTADO: atualiza todas as linhas da tabela endereco para que a coluna complemento fique com valor NULL.
+
+ATIVIDADE 12
+os resultados das consultas com JOIN não foram afetados pela alteração da coluna complemento, nenhum JOIN utiliza a coluna alterada (complemento), então todos os relacionamentos continuam funcionando normalmente
